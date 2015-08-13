@@ -1,7 +1,7 @@
 <?php
 
 namespace deit\console\parser;
-use deit\console\GenericConsole;
+use \deit\console\Event;
 
 /**
  * Parser test
@@ -11,7 +11,7 @@ class ArgvParserTest extends \PHPUnit_Framework_TestCase {
 
 	public function test() {
 
-		$console    = new GenericConsole();
+		$console    = new Event();
 		$argv       = array(
 			'my-cmd.php',
 			'-abc',

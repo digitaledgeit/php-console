@@ -10,10 +10,10 @@ use \deit\console\definition\Option;
  * Parser test
  * @author James Newell <james@digitaledgeit.com.au>
  */
-class DefinitionValidateTest extends \PHPUnit_Framework_TestCase {
+class DefinitionValidateRequiredOptionTest extends \PHPUnit_Framework_TestCase {
 
-	const OPTION_UPLOAD = 'upload';
-	const OPTION_OUTPUT         = 'o|output';
+	const OPTION_UPLOAD  = 'upload';
+	const OPTION_OUTPUT  = 'o|output';
 	const EVENT_DISPATCH = 'dispatch';
 
 	/**
@@ -57,7 +57,6 @@ class DefinitionValidateTest extends \PHPUnit_Framework_TestCase {
 			->addOption(new Option(self::OPTION_OUTPUT, Option::OPTION_REQUIRED, $outputDirectory, function($value) { return rtrim($value, '/\\'); }, function($value) {
 				return is_dir($value);
 			}))
-
 		;
 
 	    $definition->validate($event);

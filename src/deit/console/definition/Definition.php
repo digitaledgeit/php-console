@@ -164,7 +164,6 @@ class Definition {
 	public function validate(Event $event) {
 
 		foreach ($this->getOptions() as $option) {
-
 			if ($event->hasOption($option->getNames())) {
 
 				//get the value
@@ -172,12 +171,12 @@ class Definition {
 
 				//check whether a value is allowed
 				if (!$option->isValueAllowed() && !is_null($value)) {
-					throw new \RuntimeException("Option \"{$option->getName()}\" cannot have a value.");
+					throw new \InvalidArgumentException("Option \"{$option->getName()}\" cannot have a value.");
 				}
 
 				//check whether a value is required
 				if ($option->isValueRequired() && is_null($value)) {
-					throw new \RuntimeException("Option \"{$option->getName()}\" requires a value.");
+					throw new \InvalidArgumentException("Option \"{$option->getName()}\" requires a value.");
 				}
 
 				//filter the value
@@ -197,15 +196,14 @@ class Definition {
 				$validator = $option->getValidator();
 				if ($validator) {
 					if (call_user_func($validator, $value) == false) {
-						throw new \RuntimeException("Option \"{$option->getName()}\" is invalid.");
+						throw new \InvalidArgumentException("Option \"{$option->getName()}\" is invalid.");
 					}
 				}
 
 			} else {
-
 				//check whether the option is required
 				if ($option->isRequired()) {
-					throw new \RuntimeException("Option \"{$option->getName()}\" is required.");
+					throw new \InvalidArgumentException("Option \"{$option->getName()}\" is required.");
 				}
 
 				//get the default value
