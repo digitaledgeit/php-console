@@ -19,49 +19,65 @@ class DefinitionValidateRequiredOptionTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function test_validator() {
-
-		$argv       = array(
-			'my-cmd.php',
-			'-abc',
-			'-d=v',
-			'-test',
-			'--opt=test',
-		);
+	public function test_validator_catches_missing_required_argument() {
 
 		//create the event
 		$event = new Event();
 		$event
-			->setName(self::EVENT_DISPATCH)
 			->setOptions(array())
 			->setArguments(array())
 		;
 
-
-		//parse the command line arguments
-		$parser = new ArgvParser();
-		$parser->parse($event);
-
-	   
+	    //create the command's definition
 	    $definition = new Definition(); 
-
-		$outputDirectory = $_SERVER['HOME'].'/uf-dist';
-
 		$definition
-			->setName('dist:build-admin')
-			->setDescription('Uploads the admin application')
-
-			//upload option
-			->addOption(new Option(self::OPTION_UPLOAD))
-			//output directory option
-			->addOption(new Option(self::OPTION_OUTPUT, Option::OPTION_REQUIRED, $outputDirectory, function($value) { return rtrim($value, '/\\'); }, function($value) {
-				return is_dir($value);
-			}))
+			->addOption(new Option(self::OPTION_OUTPUT, Option::OPTION_REQUIRED));
 		;
 
+	    //setup the command-line arguments for the event
+	    $argv = array(
+	            'my-cmd.php',
+	            );
+
+		//parse the command-line arguments
+		$parser = new ArgvParser($argv);
+		$parser->parse($event);
+
+	    //make sure the defintion validator is unhappy	   
 	    $definition->validate($event);
 
-//		$this->assertEquals(null, $console->getOption('a'));
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function test_validator_catches_extra_argument() {
+
+		//create the event
+		$event = new Event();
+		$event
+			->setOptions(array())
+			->setArguments(array())
+		;
+
+	    //create the command's definition
+	    $definition = new Definition(); 
+		$definition
+			->addOption(new Option(self::OPTION_OUTPUT))
+		;
+
+	    //setup the command-line arguments for the event
+	    $argv = array(
+	            'my-cmd.php',
+	            '--unexpected_arg',
+	            );
+
+		//parse the command-line arguments
+		$parser = new ArgvParser($argv);
+		$parser->parse($event);
+
+	    //make sure the defintion validator is unhappy	   
+	    $definition->validate($event);
 
 	}
 
