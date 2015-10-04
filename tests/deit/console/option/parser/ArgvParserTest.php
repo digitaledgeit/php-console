@@ -13,12 +13,12 @@ class ArgvParserTest extends \PHPUnit_Framework_TestCase {
 
 		$console    = new Event();
 		$argv       = array(
-							'my-cmd.php',
-							'-abc',
-							'-d=v',
-							'-test',
-							'--opt=test',
-					);
+		                    'my-cmd.php',
+		                    '-abc',
+		                    '-d=v',
+		                    '-test',
+		                    '--opt=test',
+		);
 
 		$parser     = new ArgvParser($argv);
 		$parser->parse($console);
@@ -28,4 +28,4 @@ class ArgvParserTest extends \PHPUnit_Framework_TestCase {
 	}
 
 }
- 
+

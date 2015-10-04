@@ -28,23 +28,23 @@ class DefinitionValidateRequiredOptionTest extends \PHPUnit_Framework_TestCase {
 			->setArguments(array())
 		;
 
-	    //create the command's definition
-	    $definition = new Definition(); 
+		//create the command's definition
+		$definition = new Definition();
 		$definition
 			->addOption(new Option(self::OPTION_OUTPUT, Option::OPTION_REQUIRED));
 		;
 
-	    //setup the command-line arguments for the event
-	    $argv = array(
-	            'my-cmd.php',
-	            );
+		//setup the command-line arguments for the event
+		$argv = array(
+		        'my-cmd.php',
+		        );
 
 		//parse the command-line arguments
 		$parser = new ArgvParser($argv);
 		$parser->parse($event);
 
-	    //make sure the defintion validator is unhappy	   
-	    $definition->validate($event);
+		//make sure the defintion validator is unhappy
+		$definition->validate($event);
 
 	}
 
@@ -60,26 +60,26 @@ class DefinitionValidateRequiredOptionTest extends \PHPUnit_Framework_TestCase {
 			->setArguments(array())
 		;
 
-	    //create the command's definition
-	    $definition = new Definition(); 
+		//create the command's definition
+		$definition = new Definition();
 		$definition
 			->addOption(new Option(self::OPTION_OUTPUT))
 		;
 
-	    //setup the command-line arguments for the event
-	    $argv = array(
-	            'my-cmd.php',
-	            '--unexpected_arg',
-	            );
+		//setup the command-line arguments for the event
+		$argv = array(
+		              'my-cmd.php',
+		              '--unexpected_arg',
+		             );
 
 		//parse the command-line arguments
 		$parser = new ArgvParser($argv);
 		$parser->parse($event);
 
-	    //make sure the defintion validator is unhappy	   
-	    $definition->validate($event);
+		//make sure the defintion validator is unhappy
+		$definition->validate($event);
 
 	}
 
 }
- 
+

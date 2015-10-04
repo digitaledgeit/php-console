@@ -120,7 +120,7 @@ class Definition {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Adds an option
 	 * @param   Option $option
@@ -163,16 +163,16 @@ class Definition {
 	 */
 	public function validate(Event $event) {
 
-	    $event_options = $event->getOptions();
+		$event_options = $event->getOptions();
 
 		foreach ($this->getOptions() as $option) {
 			if ($event->hasOption($option->getNames())) {
-	            if (array_key_exists($option->getShortName(), $event_options)) {
-	                unset($event_options[$option->getShortName()]);
-	            }
-	            if (array_key_exists($option->getLongName(), $event_options)) {
-	                unset($event_options[$option->getLongName()]);
-	            }
+				if (array_key_exists($option->getShortName(), $event_options)) {
+					unset($event_options[$option->getShortName()]);
+				}
+				if (array_key_exists($option->getLongName(), $event_options)) {
+					unset($event_options[$option->getLongName()]);
+				}
 				//get the value
 				$value = $event->getOption($option->getNames(), $option->getDefault());
 
@@ -224,11 +224,11 @@ class Definition {
 			}
 
 		}
-	    // See if there was an unexpected argument
-	    if (count($event_options) > 0) {
-	        $invalid_options = join(" ", array_keys($event_options));  
-		    throw new \InvalidArgumentException("Option(s) {$invalid_options} unknown.");
-	    }
-		
+		// See if there was an unexpected argument
+		if (count($event_options) > 0) {
+			$invalid_options = join(" ", array_keys($event_options));
+			throw new \InvalidArgumentException("Option(s) {$invalid_options} unknown.");
+		}
+
 	}
-} 
+}
